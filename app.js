@@ -29,7 +29,7 @@ let databaseObjectToResponseObject = (object) => {
     role: object.role,
   };
 };
-
+//get all players
 app.get(/players/, async (request, response) => {
   const getPlayersQuery = `
     SELECT * FROM cricket_team
@@ -43,6 +43,7 @@ app.get(/players/, async (request, response) => {
   );
 });
 
+//post a player
 app.post("/players/", async (request, response) => {
   const postPlayerDetails = request.body;
   const { player_name, jersey_number, role } = postPlayerDetails;
@@ -56,5 +57,16 @@ app.post("/players/", async (request, response) => {
   `;
   const postPlayerDetailsArray = await data.run(postPlayerDetailsQuery);
   response.send("Player Added to Team");
+});
+
+//get a player
+app.get("/players/:playerId/", async (request, response) => {
+  const { playerId } = request.params;
+  const getPlayerQuery = `
+    SELECT * FROM cricket_team
+    WHERE player_id=${playerId}
+    `;
+  const getPlayerArray = await data.get(getPlayerQuery);
+  response.send(getPlayerArray);
 });
 module.exports = app;
