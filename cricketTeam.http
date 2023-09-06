@@ -4,9 +4,9 @@ POST http://localhost:3000/players/
 Content-Type: application/json
 
 {
-    "player_name":"Abinandhan A A",
-    "jersey_number":"58",
-    "role":"Batsman"
+    "player_name":"Vishal",
+    "jersey_number":17,
+    "role":"Bowler"
     
 }
 
