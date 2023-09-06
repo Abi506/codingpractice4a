@@ -69,4 +69,31 @@ app.get("/players/:playerId/", async (request, response) => {
   const getPlayerArray = await data.get(getPlayerQuery);
   response.send(getPlayerArray);
 });
+
+app.put("/players/:playerId/", async (request, response) => {
+  const { playerId } = request.params;
+  const updatePlayerDetails = request.body;
+  const { playerid, playerName, jerseyNumber, role } = updatePlayerDetails;
+  const updatePlayerDetailsQuery = `
+    UPDATE cricket_team
+    SET 
+    player_name='${playerName}',
+    jersey_number=${jerseyNumber},
+    role='${role}'
+    WHERE player_id=${playerId}
+
+    `;
+  await data.run(updatePlayerDetailsQuery);
+  response.send("Player Details Updated");
+});
+
+app.delete("/players/:playerId/", async (request, response) => {
+  const { playerId } = request.params;
+  const deletePlayerQuery = `
+    DELETE FROM cricket_team 
+    WHERE player_id=${playerId} 
+    `;
+  await data.run(deletePlayerQuery);
+  response.send("Player Removed");
+});
 module.exports = app;
